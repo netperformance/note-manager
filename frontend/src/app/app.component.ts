@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ApiService } from './ApiService';
 import { Observable } from 'rxjs';
 import { Note } from './note/note';
-
+import { ApiService } from './apiService';
 
 @Component({
   selector: 'app-root',

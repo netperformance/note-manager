@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ApiService } from '../ApiService';
+import { ApiService } from '../apiService';
 
 @Component({
   selector: 'app-note-creator',
