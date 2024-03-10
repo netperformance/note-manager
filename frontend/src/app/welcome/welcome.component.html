@@ -1,0 +1,10 @@
+<div class="container d-flex flex-column align-items-center">
+  <div class="row">
+    <div class="col"><app-note-creator></app-note-creator></div>
+  </div>
+  <div class="col" *ngFor="let note of notes$ | async">
+    <div class="row">
+      <app-note [note]="note"></app-note>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,26 @@
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem; min-width: 400px;">
+  <div class="card-body">
+    <h5 class="card-title">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Title"
+        [(ngModel)]="noteData.title"
+      />
+    </h5>
+    <p class="card-text">
+      <textarea
+        class="form-control"
+        id="exampleFormControlTextarea1"
+        rows="3"
+        placeholder="Message"
+        [(ngModel)]="noteData.message"
+      ></textarea>
+    </p>
+  </div>
+  <div class="card-footer">
+    <button type="button" class="btn btn-success btn-sm" (click)="onSaveNote()">
+      Save
+    </button>
+  </div>
+</div>

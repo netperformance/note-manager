@@ -1,0 +1,9 @@
+<div class="card text-white bg-dark mb-3" style="max-width: 18rem; min-width: 400px;" id="{{ note.id }}">
+  <div class="card-body">
+    <h5 class="card-title">{{ note.title }}</h5>
+    <p class="card-text">
+      {{ note.message }}
+    </p>
+  </div>
+  <div class="card-footer"><button type="button" class="btn btn-danger btn-sm me-2" (click)="onDeleteNote(note.id)">Delete</button> <button type="button" class="btn btn-success btn-sm">Edit</button></div>
+</div>
