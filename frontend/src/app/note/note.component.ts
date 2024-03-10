@@ -9,7 +9,6 @@ import { DataService } from '../../../dataService';
   styleUrl: './note.component.css',
 })
 export class NoteComponent {
-  
   @Input() note: Note;
 
   constructor(
@@ -30,5 +29,19 @@ export class NoteComponent {
         console.error('Error deleting note:', error);
       }
     );
+  }
+
+  onUpdateNote(noteId: number) {
+    if (this.note) {
+      this.apiService.updateNote(noteId, this.note).subscribe(
+        (response) => {
+          console.log('Erfolgreich aktualisiert:', response);
+          this.dataService.notifyItemUpdated(response.id);
+        },
+        (error) => {
+          console.error('Fehler beim Aktualisieren:', error);
+        }
+      );
+    }
   }
 }

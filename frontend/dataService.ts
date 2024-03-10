@@ -12,8 +12,13 @@ export class DataService {
   // Observable Kapselung & Immutabilität für andere Klassen
   deletedItem$ = this.deletedItemSubject.asObservable();
 
+  // create
   private addedItemSubject = new Subject<number>();
   addedItem$ = this.addedItemSubject.asObservable();
+
+  // update
+  private updateItemSubject = new Subject<number>();
+  updatedItem$ = this.updateItemSubject.asObservable();
 
   // Methode, um andere Teile der Anwendung über ein gelöschtes Element zu benachrichtigen
   // 'next' wird verwendet, um einen neuen Wert im Datenstrom zu senden
@@ -23,6 +28,10 @@ export class DataService {
 
   notifyItemAdded(id: number) {
     this.addedItemSubject.next(id);
+  }
+
+  notifyItemUpdated(id: number) {
+    this.updateItemSubject.next(id);
   }
 
 }
