@@ -9,6 +9,7 @@ import { DataService } from '../../../dataService';
   styleUrl: './note.component.css',
 })
 export class NoteComponent {
+  
   @Input() note: Note;
 
   constructor(
