@@ -9,6 +9,7 @@ import { Note } from './note';
   styleUrls: ['./note.component.css'],
 })
 export class NoteComponent {
+  
   @Input() note: Note;
 
   isEditing = false;

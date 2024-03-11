@@ -13,7 +13,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { EmptyComponent } from './empty/empty.component';
 import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
-import { NoteEditorComponent } from './note-editor/note-editor.component';
 
 const appRoutes: Routes = [
   { path: '', component: EmptyComponent },
@@ -33,8 +32,7 @@ const appRoutes: Routes = [
     ContactComponent,
     EmptyComponent,
     LoginComponent,
-    WelcomeComponent,
-    NoteEditorComponent
+    WelcomeComponent
   ],
   imports: [
     BrowserModule,
