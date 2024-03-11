@@ -23,8 +23,8 @@ export class NoteCreatorComponent {
       },
       (error) => {
         console.error('Fehler beim Speichern:', error);
-        // Hier kannst du Fehlerbehandlungen durchführen
       }
     );
   }
+  
 }

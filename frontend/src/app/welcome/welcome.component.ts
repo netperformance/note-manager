@@ -16,6 +16,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   // Dieses Abonnement wird in der ngOnDestroy-Methode am Ende der Lebensdauer der Komponente aufgehoben, um potenzielle Speicherlecks zu vermeiden.
   private deletedItemSubscription: Subscription;
   private addedItemSubscription: Subscription;
+  private updatedItemSubscription: Subscription;
 
   // Observable ist ein Objekt aus der Reactive Extensions for JavaScript (RxJS) Bibliothek. Es repräsentiert einen asynchronen Datenstrom, der Werte über die Zeit emittieren kann.
   notes$: Observable<Note[]>;
@@ -36,6 +37,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
         this.handleItemAddition(addedItemId);
       }
     );
+    this.updatedItemSubscription = this.dataService.updatedItem$.subscribe(
+      (updatedItemId) => {
+        this.handleItemUpdate(updatedItemId);
+      }
+    );
   }
 
   // Logik zum Aktualisieren der Liste nach Löschvorgang.
@@ -49,6 +55,26 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     this.notes$ = this.apiService.getNotes();
   }
 
+  handleItemUpdate(updatedItemId: number) {
+    this.notes$ = this.notes$.pipe(
+      map(notes => notes.map(note => (note.id === updatedItemId ? this.getLocalUpdatedNote(updatedItemId) : note)))
+    );
+  }
+
+  getLocalUpdatedNote(updatedItemId: number): Note {
+    //*/
+    const updatedNote: Note = {
+      id: updatedItemId,  // Aktualisierte ID
+      title: 'Updated Title',
+      message: 'Updated Message',
+      date: new Date().toISOString(),
+    };
+    return updatedNote;
+    //*/
+    // Vollständige Aktualisierung von der API abrufen:
+    // return this.apiService.getNoteById(updatedItemId);
+  }
+
   // Lifecycle-Hook-Methode. Diese Methode wird aufgerufen, nachdem Angular die Komponente initialisiert hat.
   ngOnInit(): void {
     this.notes$ = this.apiService.getNotes();
@@ -59,6 +85,7 @@ export class WelcomeComponent implements OnInit, OnDestroy {
     // Wenn eine Komponente zerstört wird, aber das Abonnement nicht aufgehoben wird, bleibt das Abonnement bestehen, und die Komponente könnte weiterhin auf Ereignisse reagieren, die sie eigentlich nicht mehr betrifft.
     this.deletedItemSubscription.unsubscribe();
     this.addedItemSubscription.unsubscribe();
+    this.updatedItemSubscription.unsubscribe();
   }
 
 }

@@ -1,9 +1,60 @@
-<div class="card text-white bg-dark mb-3" style="max-width: 18rem; min-width: 400px;" id="{{ note.id }}">
+<div
+  *ngIf="!isEditing; else editMode"
+  class="card text-white bg-dark mb-3"
+  style="max-width: 18rem; min-width: 400px"
+  id="{{ note.id }}"
+>
   <div class="card-body">
     <h5 class="card-title">{{ note.title }}</h5>
-    <p class="card-text">
-      {{ note.message }}
-    </p>
+    <p class="card-text">{{ note.message }}</p>
   </div>
-  <div class="card-footer"><button type="button" class="btn btn-danger btn-sm me-2" (click)="onDeleteNote(note.id)">Delete</button> <button type="button" class="btn btn-success btn-sm" (click)="onUpdateNote(note.id)">Edit</button></div>
+  <div class="card-footer">
+    <button
+      type="button"
+      class="btn btn-success btn-sm me-2"
+      (click)="startEditing()"
+    >
+      Edit
+    </button>
+    <button
+      type="button"
+      class="btn btn-danger btn-sm"
+      (click)="onDeleteNote(note.id)"
+    >
+      Delete
+    </button>
+  </div>
 </div>
+
+<ng-template #editMode>
+  <div
+    class="card text-white bg-dark mb-3"
+    style="max-width: 18rem; min-width: 400px"
+    id="{{ note.id }}"
+  >
+    <div class="card-body">
+      <input [(ngModel)]="editedTitle" type="text" class="form-control" />
+      <textarea
+        [(ngModel)]="editedMessage"
+        class="form-control"
+        rows="3"
+      ></textarea>
+    </div>
+    <div class="card-footer">
+      <button
+        type="button"
+        class="btn btn-success btn-sm me-2"
+        (click)="saveChanges()"
+      >
+        Speichern
+      </button>
+      <button
+        type="button"
+        class="btn btn-danger btn-sm"
+        (click)="cancelEditing()"
+      >
+        Abbrechen
+      </button>
+    </div>
+  </div>
+</ng-template>

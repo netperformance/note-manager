@@ -15,6 +15,11 @@ export class ApiService {
     return this.http.get<any[]>(`${this.apiUrl}/findAll`);
   }
 
+  // getNoteById
+  getNoteById(noteId: number): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/${noteId}`);
+  }
+
   // create
   createNote(noteData: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/`, noteData);
