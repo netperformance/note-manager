@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ApiService } from '../apiService';
-import { Observable, Subscription, map } from 'rxjs';
+import { Observable, Subscription, map, switchMap } from 'rxjs';
 import { Note } from '../note/note';
 import { DataService } from '../../../dataService';
 
@@ -56,23 +56,23 @@ export class WelcomeComponent implements OnInit, OnDestroy {
   }
 
   handleItemUpdate(updatedItemId: number) {
-    this.notes$ = this.notes$.pipe(
-      map(notes => notes.map(note => (note.id === updatedItemId ? this.getLocalUpdatedNote(updatedItemId) : note)))
+    this.getLocalUpdatedNote(updatedItemId).subscribe(
+      updatedNote => {
+        // pipe ist eine Funktion in RxJS, die auf Observables angewendet wird, um Transformationen durchzuführen.
+        this.notes$ = this.notes$.pipe(
+          // Der map-Operator ist eine Transformation, die auf jeden Wert im Observable angewendet wird.
+          // In diesem Fall wird map verwendet, um die Liste der Notizen zu durchlaufen und die aktualisierte Note an der Stelle zu platzieren, an der die ID mit updatedItemId übereinstimmt.
+          map(notes => notes.map(note => (note.id === updatedItemId ? updatedNote : note)))
+        );
+      },
+      error => {
+        console.error('Error updating note locally:', error);
+      }
     );
   }
-
-  getLocalUpdatedNote(updatedItemId: number): Note {
-    //*/
-    const updatedNote: Note = {
-      id: updatedItemId,  // Aktualisierte ID
-      title: 'Updated Title',
-      message: 'Updated Message',
-      date: new Date().toISOString(),
-    };
-    return updatedNote;
-    //*/
-    // Vollständige Aktualisierung von der API abrufen:
-    // return this.apiService.getNoteById(updatedItemId);
+  
+  getLocalUpdatedNote(updatedItemId: number): Observable<Note> {
+    return this.apiService.getNoteById(updatedItemId);
   }
 
   // Lifecycle-Hook-Methode. Diese Methode wird aufgerufen, nachdem Angular die Komponente initialisiert hat.
