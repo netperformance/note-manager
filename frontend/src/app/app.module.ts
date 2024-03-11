@@ -15,10 +15,11 @@ import { LoginComponent } from './login/login.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 
 const appRoutes: Routes = [
-  { path: '', component: EmptyComponent },
+  { path: '', component: LoginComponent },
   { path: 'home', component: WelcomeComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'contact', component: ContactComponent },
+  { path: '**', component: EmptyComponent }
 ]
 
 @NgModule({
