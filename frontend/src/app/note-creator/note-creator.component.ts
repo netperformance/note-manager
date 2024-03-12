@@ -13,18 +13,32 @@ export class NoteCreatorComponent {
     private dataService: DataService
   ) {}
 
-  noteData: { title: string; message: string } = { title: '', message: '' };
+  noteData: { title: string; message: string; date?: Date } = {
+    title: '',
+    message: '',
+    date: new Date(),
+  };
 
   onSaveNote() {
-    this.apiService.createNote(this.noteData).subscribe(
-      (response) => {
-        console.log('Erfolgreich gespeichert:', response);
-        this.dataService.notifyItemAdded(response.id)
-      },
-      (error) => {
-        console.error('Fehler beim Speichern:', error);
-      }
+    if (this.isValidForm()) {
+      // Aktualisiere das Erstellungsdatum vor dem Speichern
+      this.noteData.date = new Date();
+
+      this.apiService.createNote(this.noteData).subscribe(
+        (response) => {
+          console.log('Erfolgreich gespeichert:', response);
+          this.dataService.notifyItemAdded(response.id);
+        },
+        (error) => {
+          console.error('Fehler beim Speichern:', error);
+        }
+      );
+    }
+  }
+
+  isValidForm(): boolean {
+    return (
+      this.noteData.title.trim() !== '' || this.noteData.message.trim() !== ''
     );
   }
-  
 }

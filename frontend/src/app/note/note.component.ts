@@ -2,11 +2,13 @@ import { Component, Input } from '@angular/core';
 import { ApiService } from '../apiService';
 import { DataService } from '../../../dataService';
 import { Note } from './note';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-note',
   templateUrl: './note.component.html',
   styleUrls: ['./note.component.css'],
+  providers: [DatePipe],
 })
 export class NoteComponent {
   
@@ -18,7 +20,8 @@ export class NoteComponent {
 
   constructor(
     private apiService: ApiService,
-    private dataService: DataService
+    private dataService: DataService,
+    private datePipe: DatePipe
   ) {}
 
   onDeleteNote(deletedItemId) {
@@ -70,6 +73,11 @@ export class NoteComponent {
   // Methode zum Abbrechen der Bearbeitung
   cancelEditing() {    
     this.isEditing = false;
+  }
+
+  
+  private formatDate(date: Date): string {
+    return this.datePipe.transform(date, 'dd.MM.yyyy') || '';
   }
 
 }

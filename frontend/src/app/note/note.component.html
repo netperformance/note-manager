@@ -8,7 +8,7 @@
     <h5 class="card-title">{{ note.title }}</h5>
     <p class="card-text">{{ note.message }}</p>
   </div>
-  <div class="card-footer">
+  <div class="card-footer" style="display: flex; align-items: center;">
     <button
       type="button"
       class="btn btn-success btn-sm me-2"
@@ -23,6 +23,7 @@
     >
       Delete
     </button>
+    <p class="card-date" style="margin-left: auto; font-size: 12px;">{{ note.date | date:'dd.MM.yyyy - HH:mm' }}</p>
   </div>
 </div>
 

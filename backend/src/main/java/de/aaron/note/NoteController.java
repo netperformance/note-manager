@@ -65,5 +65,10 @@ public class NoteController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
+    
+    @GetMapping("heartbeat")
+    public ResponseEntity<String> heartbeat() {
+        return new ResponseEntity<>("I am alive!", HttpStatus.OK);
+    }
 
 }
