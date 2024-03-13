@@ -34,4 +34,10 @@ export class ApiService {
   deleteNote(noteId: number): Observable<any> {
     return this.http.delete(`${this.apiUrl}/${noteId}`);
   }
+
+  // Heartbeat
+  getHeartbeat(): Observable<string> {
+    return this.http.get<string>(`${this.apiUrl}/heartbeat`);
+  }
+
 }
